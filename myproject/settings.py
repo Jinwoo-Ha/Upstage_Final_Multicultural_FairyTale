@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-n(a@^99sca-1j@eo4v79mgvvhqwm^c%bhaw*ih$j!c727&=e#3
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #Railway로 변경
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -131,6 +131,14 @@ STATICFILES_DIRS = [
 
 # Railway용 추가
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# Railway용 추가
+# 정적 파일을 캐시로 서빙하기 위한 WhiteNoise 미들웨어 설정
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+# WhiteNoise 설정 추가 (압축 및 캐싱 설정)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
