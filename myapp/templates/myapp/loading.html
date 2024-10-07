@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block extra_style %}
+<style>
+    .loading-content {
+        text-align: center;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .loading-title {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid var(--primary-color);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="loading-content">
+    <h2 class="loading-title">동화를 만들고 있어요...</h2>
+    <div class="spinner"></div>
+    <p id="loadingMessage"> 멋진 이야기를 준비하고 있어요! 2분 정도면 완성돼요 :)</p>
+</div>
+
+<script>
+    function checkStoryStatus() {
+        fetch('/check_story_status/{{ story_id }}/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'completed') {
+                    window.location.href = '/story/{{ story_id }}/';
+                } else {
+                    setTimeout(checkStoryStatus, 3000);  // 3초마다 상태 확인
+                }
+            });
+    }
+
+    checkStoryStatus();
+</script>
+{% endblock %}

@@ -1,0 +1,500 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>먼나라친구나라 - 어린이 다문화 교육 동화 생성 AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFB347;
+            --secondary-color: #FFA500;
+            --background-color: #FFF8DC;
+            --text-color: #4A4A4A;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background: linear-gradient(135deg, #FFE4B5 0%, #FFB347 100%);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background-color: var(--background-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23FFD700' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        h1, h2, h3 {
+            font-family: 'Jua', sans-serif;
+            color: var(--secondary-color);
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* 챗봇 관련 스타일 */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-color: #FFA500;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 3px solid #FFD700;
+        }
+
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .chatbot-icon img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-chat {
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 5px;
+        }
+
+        /* 음성 통화 관련 새로운 스타일 */
+        .call-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .character-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            background-image: url("{% static 'images/character_tiger2.png' %}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .call-status {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .end-call-button {
+            background-color: #FF4136;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+    {% block extra_style %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <div class="chatbot-icon" id="chatbotIcon">
+        <img src="{% static 'images/character_tiger2.png' %}" alt="Chatbot">
+    </div>
+
+    <!-- 챗 윈도우 -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>챗봇과 대화하기</span>
+            <span class="close-chat" id="closeChat">×</span>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="메시지를 입력하세요...">
+            <button id="sendMessage">전송</button>
+            <button id="callButton">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E" alt="전화" style="width: 20px; height: 20px;">
+            </button>
+        </div>
+    </div>
+
+    <!-- 통화 화면 -->
+    <div id="callScreen" class="call-screen">
+        <div class="character-image"></div>
+        <div class="call-status">통화 중...</div>
+        <button id="endCallButton" class="end-call-button">통화 종료</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbotIcon = document.getElementById('chatbotIcon');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChat = document.getElementById('closeChat');
+            const chatInput = document.getElementById('chatInput');
+            const sendMessage = document.getElementById('sendMessage');
+            const chatMessages = document.getElementById('chatMessages');
+            const callButton = document.getElementById('callButton');
+            const callScreen = document.getElementById('callScreen');
+            const endCallButton = document.getElementById('endCallButton');
+            const callStatus = document.querySelector('.call-status');
+
+            let recognition;
+            let audio = new Audio();
+            let isListening = false;
+            let isWaitingForUserInput = true;
+            let isSpeaking = false;
+            let noiseDetectionTimeout;
+
+            // 음성 인식 초기화
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'ko-KR';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+            }
+
+            chatbotIcon.addEventListener('click', function() {
+                chatWindow.style.display = 'flex';
+            });
+
+            closeChat.addEventListener('click', function() {
+                chatWindow.style.display = 'none';
+            });
+
+            function addMessage(message, isUser = false) {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messageElement.style.marginBottom = '10px';
+                messageElement.style.padding = '5px 10px';
+                messageElement.style.borderRadius = '10px';
+                messageElement.style.maxWidth = '70%';
+                
+                if (isUser) {
+                    messageElement.style.backgroundColor = '#e6f2ff';
+                    messageElement.style.marginLeft = 'auto';
+                } else {
+                    messageElement.style.backgroundColor = '#f0f0f0';
+                    messageElement.style.marginRight = 'auto';
+                }
+                
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function sendChatMessage() {
+                const message = chatInput.value.trim();
+                if (message && isWaitingForUserInput) {
+                    isWaitingForUserInput = false;
+                    addMessage(message, true);
+                    chatInput.value = '';
+                    
+                    fetchChatbotResponse(message);
+                }
+            }
+
+            function fetchChatbotResponse(message) {
+                updateCallStatus('답변 생성 중...');
+                fetch('/chatbot/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: 'user_input=' + encodeURIComponent(message)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage(data.response);
+                    if (isListening) {
+                        speakResponse(data.response);
+                    } else {
+                        isWaitingForUserInput = true;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage('죄송해요, 오류가 발생했어요. 다시 시도해 주세요.');
+                    updateCallStatus('오류 발생');
+                    isWaitingForUserInput = true;
+                });
+            }
+
+            sendMessage.addEventListener('click', sendChatMessage);
+
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+
+            callButton.addEventListener('click', startCall);
+            endCallButton.addEventListener('click', endCall);
+
+            function startCall() {
+                chatWindow.style.display = 'none';
+                callScreen.style.display = 'flex';
+                startVoiceRecognition();
+                updateCallStatus('연결 중...');
+            }
+
+            function endCall() {
+                callScreen.style.display = 'none';
+                chatWindow.style.display = 'flex';
+                stopVoiceRecognition();
+                stopSpeaking();
+                updateCallStatus('통화 종료');
+            }
+
+            function startVoiceRecognition() {
+                if (recognition && isWaitingForUserInput && !isSpeaking) {
+                    isListening = true;
+                    recognition.start();
+                    recognition.onresult = handleRecognitionResult;
+                    recognition.onend = () => {
+                        if (isListening && isWaitingForUserInput && !isSpeaking) {
+                            setTimeout(() => {
+                                recognition.start();
+                            }, 100);
+                        }
+                    };
+                    updateCallStatus('듣는 중...');
+                }
+            }
+
+            function stopVoiceRecognition() {
+                if (recognition) {
+                    isListening = false;
+                    recognition.stop();
+                }
+            }
+
+            function handleRecognitionResult(event) {
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                if (finalTranscript && isWaitingForUserInput) {
+                    clearTimeout(noiseDetectionTimeout);
+                    if (finalTranscript.length > 2) {  // 노이즈 필터링: 2글자 이상만 처리
+                        isWaitingForUserInput = false;
+                        addMessage(finalTranscript, true);
+                        processVoiceInput(finalTranscript);
+                    } else {
+                        console.log('Ignored short input (likely noise):', finalTranscript);
+                        startVoiceRecognition();
+                    }
+                }
+            }
+
+            function stopSpeaking() {
+                if (audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+                isSpeaking = false;
+            }
+
+            function processVoiceInput(text) {
+                updateCallStatus('답변 생성 중...');
+                fetchChatbotResponse(text);
+            }
+
+            function speakResponse(text) {
+                updateCallStatus('답변 생성 중...');
+                fetch('/tts/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ text: text })
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+                    audio.src = url;
+                    audio.onloadedmetadata = () => {
+                        updateCallStatus('답변 중...');
+                        isSpeaking = true;
+                        audio.play();
+                    };
+                    audio.onended = () => {
+                        isSpeaking = false;
+                        setTimeout(() => {
+                            updateCallStatus('듣는 중...');
+                            isWaitingForUserInput = true;
+                            startVoiceRecognition();
+                        }, 1000);
+                    };
+                    audio.onerror = (event) => {
+                        console.error('Audio playback error', event);
+                        updateCallStatus('음성 재생 오류');
+                        isWaitingForUserInput = true;
+                        startVoiceRecognition();
+                    };
+                })
+                .catch(error => {
+                    console.error('TTS API error:', error);
+                    updateCallStatus('음성 생성 오류');
+                    isWaitingForUserInput = true;
+                    startVoiceRecognition();
+                });
+            }
+
+            function updateCallStatus(status) {
+                callStatus.textContent = status;
+            }
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // 에러 처리
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event.error);
+                updateCallStatus('음성 인식 오류: ' + event.error);
+                isWaitingForUserInput = true;
+                startVoiceRecognition();
+            };
+        });
+    </script>
+</body>
+</html>

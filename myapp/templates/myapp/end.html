@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block extra_style %}
+<style>
+    .end-content {
+        text-align: center;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .end-title {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .replay-button {
+        background-color: var(--secondary-color);
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    .replay-button:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="end-content">
+    <h2 class="end-title">이야기가 끝났어!</h2>
+    <p>재미있었니? 또 다른 이야기를 만들어볼까?</p>
+    <a href="{% url 'landing' %}" class="replay-button">새로운 이야기 시작하기</a>
+</div>
+{% endblock %}

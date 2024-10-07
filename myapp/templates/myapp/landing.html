@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_style %}
+<style>
+    .logo-container {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .logo {
+        width: 150px;
+        height: 150px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .logo img {
+        width: 100px;
+        height: 100px;
+    }
+    .service-name {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+    }
+    .service-description {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+    }
+    .start-button-container {
+        text-align: center;
+    }
+    .start-button {
+        font-size: 1.2rem;
+        padding: 15px 40px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="logo-container">
+    <div class="logo">
+        <img src="{% static 'images/character_tiger2.png' %}" alt="흥이 로고">
+    </div>
+    <h1 class="service-name">먼나라친구나라</h1>
+    <p class="service-description">어린이 다문화 교육 동화 생성 AI</p>
+</div>
+
+<div class="start-button-container">
+    <a href="{% url 'storyinfo' %}" class="btn start-button">시작하기</a>
+</div>
+{% endblock %}

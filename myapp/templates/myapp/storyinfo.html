@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block extra_style %}
+<style>
+    .form-container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .form-title {
+        text-align: center;
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid var(--primary-color);
+        border-radius: 25px;
+        font-size: 1rem;
+        background-color: #FFFAF0;
+    }
+    .form-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+    }
+    .form-submit {
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        width: 100%;
+        margin-top: 2rem;
+    }
+    .form-submit:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">나만의 동화 만들기</h2>
+    <form method="post" id="storyForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" id="name" name="name" class="form-input" required placeholder="너의 이름을 알려줘">
+        </div>
+        <div class="form-group">
+            <label for="age" class="form-label">나이</label>
+            <input type="number" id="age" name="age" class="form-input" required placeholder="몇 살이니?">
+        </div>
+        <div class="form-group">
+            <label for="country" class="form-label">관심 있는 나라</label>
+            <input type="text" id="country" name="country" class="form-input" required placeholder="어느 나라에 대해 알고 싶니?">
+        </div>
+        <div class="form-group">
+            <label for="interests" class="form-label">좋아하는 것들</label>
+            <input type="text" id="interests" name="interests" class="form-input" required placeholder="네가 좋아하는 것들을 알려줘 (예: 공룡, 우주)">
+        </div>
+        <div class="form-group">
+            <label for="voice_type" class="form-label">동화 읽어주는 목소리</label>
+            <select id="voice_type" name="voice_type" class="form-input" required>
+                <option value="">선택해주세요</option>
+                <option value="male">남자 목소리</option>
+                <option value="female">여자 목소리</option>
+            </select>
+        </div>
+        <button type="submit" class="form-submit" id="submitButton">동화 만들기</button>
+    </form>
+</div>
+{% endblock %}
