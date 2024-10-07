@@ -132,14 +132,6 @@ STATICFILES_DIRS = [
 # Railway용 추가
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-# Railway용 추가
-# 정적 파일을 캐시로 서빙하기 위한 WhiteNoise 미들웨어 설정
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-
-# WhiteNoise 설정 추가 (압축 및 캐싱 설정)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
