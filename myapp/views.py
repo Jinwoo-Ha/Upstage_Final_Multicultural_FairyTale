@@ -108,3 +108,20 @@ def text_to_speech(request):
         return HttpResponse(response.audio_content, content_type='audio/mpeg')
     
     return HttpResponse(status=405)  # Method Not Allowed
+
+
+from .models import UserInfo, Story, StoryImage, LanguageExpression
+
+def languagestudy(request):
+    user_info = UserInfo.objects.last()
+    country = user_info.country_of_interest
+    expressions = LanguageExpression.objects.filter(country=country)
+    
+    # 각 표현에 대해 오디오 파일 URL 추가
+    for expression in expressions:
+        if expression.audio_file:
+            expression.audio_url = expression.audio_file.url
+        else:
+            expression.audio_url = None
+    
+    return render(request, 'myapp/languagestudy.html', {'country': country, 'expressions': expressions})

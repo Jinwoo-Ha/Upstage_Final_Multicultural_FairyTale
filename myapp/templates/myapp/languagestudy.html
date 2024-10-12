@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block extra_style %}
+<style>
+    .language-content {
+        text-align: center;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .language-title {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .expression-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .expression-item {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 1rem 0;
+        min-height: 60px;
+    }
+    .expression-text {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .expression-original {
+        font-weight: bold;
+        color: var(--secondary-color);
+    }
+    .button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: var(--secondary-color);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    .button:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-50%) translateY(-2px);
+    }
+    .new-story-button {
+        position: static;
+        transform: none;
+        margin-top: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="language-content">
+    <h2 class="language-title">{{ country }}의 재미있는 표현</h2>
+    <ul class="expression-list">
+        {% for expression in expressions %}
+        <li class="expression-item">
+            <div class="expression-text">
+                <span class="expression-original">{{ expression.original }}</span>: {{ expression.translation }}
+            </div>
+            {% if expression.audio_file %}
+                <button class="button" onclick="playAudio('{{ expression.audio_file.url }}', '{{ expression.original }}')">들어보기</button>
+            {% else %}
+                <button class="button" disabled>오디오 없음</button>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'landing' %}" class="button new-story-button">새로운 이야기 시작하기</a>
+</div>
+
+<audio id="audioPlayer"></audio>
+
+<script>
+function playAudio(url, text) {
+    const audioPlayer = document.getElementById('audioPlayer');
+    audioPlayer.src = url;
+    
+    audioPlayer.onloadedmetadata = function() {
+        audioPlayer.play().catch(e => {
+            console.error('Audio playback failed:', e);
+            alert(`오디오 재생에 실패했습니다: ${text}`);
+        });
+    };
+
+    audioPlayer.onerror = function() {
+        console.error('Audio loading failed:', audioPlayer.error);
+        alert(`오디오 로딩에 실패했습니다: ${text}\n오류: ${audioPlayer.error.message}`);
+    };
+}
+</script>
+{% endblock %}

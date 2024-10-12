@@ -17,3 +17,13 @@ class StoryImage(models.Model):
     story = models.ForeignKey(Story, related_name='images', on_delete=models.CASCADE)
     image_url = models.URLField()
     page_number = models.IntegerField()
+
+
+class LanguageExpression(models.Model):
+    country = models.CharField(max_length=100)
+    original = models.CharField(max_length=200)
+    translation = models.CharField(max_length=200)
+    audio_file = models.FileField(upload_to='audio/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.country}: {self.original}"
