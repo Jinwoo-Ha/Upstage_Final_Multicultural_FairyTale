@@ -1,5 +1,9 @@
 from django.urls import path
 from . import views
+from .views import (
+    tts_view, chatbot_view, landing, storyinfo, loading, story, end, languagestudy, check_story_status
+)
+
 
 urlpatterns = [
     path('', views.landing, name='landing'),
@@ -9,8 +13,7 @@ urlpatterns = [
     path('end/', views.end, name='end'),
     path('chatbot/', views.chatbot_view, name='chatbot'),
     path('check_story_status/<int:story_id>/', views.check_story_status, name='check_story_status'),
-    #google cloud tts
-    path('tts/', views.text_to_speech, name='text_to_speech'),
+    path('tts/', tts_view, name='tts'),
     path('languagestudy/', views.languagestudy, name='languagestudy'),  # 새로운 URL 패턴 추가
 
 ]

@@ -81,33 +81,67 @@ def generate_story_async(story_id, user_info):
 
 # Google cloud tts
 from django.http import HttpResponse
-from google.cloud import texttospeech
 import json
+import requests
+import time
 
-def text_to_speech(request):
+# Typecast API 설정
+API_URL = "https://typecast.ai/api/speak"
+API_TOKEN = "Bearer __plt9ETPhnqVPpCcSdxZPhdQgV6HvSvbuUGMKBUCX7AL"
+HEADERS = {
+    'Content-Type': 'application/json',
+    'Authorization': API_TOKEN
+}
+
+def generate_tts_audio(text):
+    """Typecast API로 음성 생성 요청."""
+    payload = {
+        "actor_id": "6080369d3211aa112ab131db",
+        "text": text,
+        "lang": "auto",
+        "tempo": 1,
+        "volume": 100,
+        "pitch": 0,
+        "xapi_hd": True,
+        "max_seconds": 60,
+        "model_version": "latest",
+        "xapi_audio_format": "wav"
+    }
+
+    response = requests.post(API_URL, headers=HEADERS, data=json.dumps(payload))
+    if response.status_code == 200:
+        return response.json()["result"]["speak_v2_url"]
+    else:
+        raise Exception(f"TTS 생성 실패: {response.status_code}, {response.text}")
+
+def poll_audio_url(speak_url):
+    """폴링으로 음성 파일 준비 여부 확인."""
+    while True:
+        response = requests.get(speak_url, headers=HEADERS)
+        result = response.json()["result"]
+        if result["status"] == "done":
+            return result["audio_download_url"]
+        time.sleep(1)
+
+@csrf_exempt
+def tts_view(request):
+    """Typecast API를 사용한 TTS 요청 처리."""
     if request.method == 'POST':
         data = json.loads(request.body)
         text = data.get('text', '')
 
-        client = texttospeech.TextToSpeechClient()
-        synthesis_input = texttospeech.SynthesisInput(text=text)
+        try:
+            speak_url = generate_tts_audio(text)
+            audio_url = poll_audio_url(speak_url)
 
-        voice = texttospeech.VoiceSelectionParams(
-            language_code="ko-KR", 
-            name="ko-KR-Neural2-C"
-        )
+            audio_response = requests.get(audio_url, headers=HEADERS)
+            return HttpResponse(audio_response.content, content_type='audio/wav')
 
-        audio_config = texttospeech.AudioConfig(
-            audio_encoding=texttospeech.AudioEncoding.MP3
-        )
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
-        response = client.synthesize_speech(
-            input=synthesis_input, voice=voice, audio_config=audio_config
-        )
+    return HttpResponse(status=405)
 
-        return HttpResponse(response.audio_content, content_type='audio/mpeg')
-    
-    return HttpResponse(status=405)  # Method Not Allowed
 
 
 from .models import UserInfo, Story, StoryImage, LanguageExpression
