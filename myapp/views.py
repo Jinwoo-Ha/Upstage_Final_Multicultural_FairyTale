@@ -25,7 +25,6 @@ def storyinfo(request):
             age=request.POST['age'],
             country_of_interest=request.POST['country'],
             interests=request.POST['interests'],
-            voice_type=request.POST['voice_type']
         )
         return redirect('loading')
     return render(request, 'myapp/storyinfo.html')
