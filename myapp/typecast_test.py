@@ -3,6 +3,10 @@ import json
 import wave
 import pyaudio
 import io
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 url = "https://typecast.ai/api/speak"
 text_to_convert = "안녕하세요, 이것은 VSCode에서 실행한 Typecast API 테스트입니다. 파일을 저장하지 않고 직접 재생합니다."
@@ -22,7 +26,7 @@ payload = json.dumps({
 
 headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'Bearer __plt9ETPhnqVPpCcSdxZPhdQgV6HvSvbuUGMKBUCX7AL'
+  'Authorization': f'Bearer {os.getenv("TYPECAST_API_KEY")}'
 }
 
 try:
