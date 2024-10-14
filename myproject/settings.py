@@ -144,5 +144,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 UPSTAGE_API_KEY = os.getenv('UPSTAGE_API_KEY')
 
-# Railway용 코드
-CSRF_TRUSTED_ORIGINS = ['https://last-production-7612.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://wired-select-mongrel.ngrok-free.app']
