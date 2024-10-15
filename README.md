@@ -103,5 +103,5 @@
 - **다국어 버전 개발**: 다문화 아동이 한국을 이해하는 데 도움이 되도록 다양한 언어로 확장
 
 ## 참고자료
-- 데모 비디오: https://youtu.be/bj6lR3HpYHg?si=BMAyIT90xb_2Bfwl
-- 프로젝트 소개서: https://drive.google.com/file/d/1nJNDwJpT5M1Bu0R3r03UWODb8kFbM_gk/view?usp=sharing
+- 데모 비디오: https://www.youtube.com/watch?v=BDATY7UdLU0
+- 프로젝트 소개서: https://drive.google.com/file/d/1nv8Wk6iAjPz0R9EOF_wftgi6unh5PNQF/view?usp=drive_link
