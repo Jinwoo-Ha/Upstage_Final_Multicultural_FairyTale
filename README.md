@@ -104,4 +104,4 @@
 
 ## 참고자료
 - 데모 비디오: https://www.youtube.com/watch?v=BDATY7UdLU0
-- 프로젝트 소개서: https://drive.google.com/file/d/1nv8Wk6iAjPz0R9EOF_wftgi6unh5PNQF/view?usp=drive_link
+- 프로젝트 소개서: https://drive.google.com/file/d/1GpyMLtUzY2WrWf8WiVDDwQvpBL3zzO_H/view?usp=sharing
